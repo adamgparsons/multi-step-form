@@ -1,173 +1,130 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import "./App.css";
+
+//steps
+import Step1 from "./Step1";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
+import Step4 from "./Step4";
+import Step5 from "./Step5";
+
+// Material UI
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import { makeStyles } from "@material-ui/core/styles";
+import grey from "@material-ui/core/colors/grey";
+import lightBlue from "@material-ui/core/colors/lightBlue";
+
+const useStyles = makeStyles(theme => ({
+  card: {
+    maxWidth: 500,
+    margin: "0 auto",
+    padding: "20px",
+    borderBottomLeftRadius: "0px",
+    borderBottomRightRadius: "0px"
+  },
+  cardHeader: {
+    fontSize: "16px",
+    color: grey[600]
+  },
+  cardHeaderRoot: {
+    paddingLeft: "0px"
+  },
+  codeSnippet: {
+    maxWidth: 500,
+    margin: "0 auto",
+    padding: "20px",
+    backgroundColor: grey[800],
+    color: lightBlue[300],
+    fontSize: "16px",
+    borderBottomLeftRadius: "4px",
+    borderBottomRightRadius: "4px"
+  },
+  codeSnippetValue: {
+    color: "white"
+  }
+}));
 
 function MasterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [name, setName] = useState("");
   const [haveChildren, setHaveChildren] = useState("");
   const [childrenNumber, setChildrenNumber] = useState("");
+  const classes = useStyles();
 
+  // this function determines the next step in the form.
+  // It pulls this from the logic placed on button inside the StepX component
   function nextStep(e) {
     setCurrentStep(e);
   }
 
+  // accepts the name from a text field and assigns it to the name state
   function handleName(e) {
     setName(e.target.value);
   }
 
+  // accepts the value from radio button
+  // this hook is then used in the conditional logic on the button
   function handleHaveChildren(e) {
     setHaveChildren(e.target.value);
   }
 
+  // accepts a value from the input & assigns it to the children state
   function handleChildrenNumber(e) {
     setChildrenNumber(e.target.value);
   }
 
   return (
-    <div>
-      <Step1 currentStep={currentStep} nextStep={nextStep} />
-      <Step2
-        currentStep={currentStep}
-        nextStep={nextStep}
-        name={name}
-        handleName={handleName}
-      />
-      <Step3
-        currentStep={currentStep}
-        nextStep={nextStep}
-        handleHaveChildren={handleHaveChildren}
-        haveChildren={haveChildren}
-      />
-      <Step4
-        currentStep={currentStep}
-        nextStep={nextStep}
-        childrenNumber={childrenNumber}
-        handleChildrenNumber={handleChildrenNumber}
-      />
-      <Step5 currentStep={currentStep} />
-      <br />
-      <br />
-      Current step is {currentStep}
-      <br />
-      Name is {name}
-      <br />
-      Have children? {haveChildren}
-      <br />
-      Number of children? {childrenNumber}
-    </div>
-  );
-}
-
-function Step1({ currentStep, nextStep }) {
-  if (currentStep === 1) {
-    return (
-      <div className="form-group">
-        <h1>Let's get started</h1>
-
-        <button onClick={() => nextStep(2)}>Start</button>
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
-
-function Step2({ currentStep, nextStep, name, handleName }) {
-  if (currentStep === 2) {
-    return (
-      <div className="form-group">
-        <h1>What is your name?</h1>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Enter name"
-          value={name} // Prop: The email input data
-          onChange={handleName} // Prop: Puts data into state
+    <Fragment>
+      <Card className={classes.card}>
+        {/* Each step is listed here with the relevent function passed
+      down to the relevant Step
+       */}
+        <CardHeader
+          title="Multi-step form example"
+          classes={{
+            content: classes.cardHeaderRoot,
+            root: classes.cardHeaderRoot,
+            title: classes.cardHeader
+          }}
         />
-        <button onClick={() => nextStep(3)}>Next</button>
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
-
-function Step3({ currentStep, nextStep, handleHaveChildren, haveChildren }) {
-  if (currentStep === 3) {
-    return (
-      <div className="form-group">
-        <h1>Do you have children?</h1>
-        <form>
-          <label>
-            <input
-              type="radio"
-              name="name"
-              value="yes"
-              onChange={handleHaveChildren}
-            />
-            Yes
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="name"
-              value="no"
-              onChange={handleHaveChildren}
-            />
-            No
-          </label>
-        </form>
-        <button
-          onClick={() => (haveChildren === "yes" ? nextStep(4) : nextStep(5))}
-        >
-          Next
-        </button>
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
-
-function Step4({
-  currentStep,
-  nextStep,
-  childrenNumber,
-  handleChildrenNumber
-}) {
-  if (currentStep === 4) {
-    return (
-      <div className="form-group">
-        <h1>How many children do you have?</h1>
-        <form>
-          <input
-            id="children-number"
-            name="children-number"
-            type="text"
-            placeholder="number of children"
-            value={childrenNumber} // Prop: The email input data
-            onChange={handleChildrenNumber} // Prop: Puts data into state
-          />
-        </form>
-        <button onClick={() => nextStep(5)}>Next</button>
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
-
-function Step5({ currentStep }) {
-  if (currentStep === 5) {
-    return (
-      <div className="form-group">
-        <h1>Thank you</h1>
-      </div>
-    );
-  } else {
-    return null;
-  }
+        <Step1 currentStep={currentStep} nextStep={nextStep} />
+        <Step2
+          currentStep={currentStep}
+          nextStep={nextStep}
+          name={name}
+          handleName={handleName}
+        />
+        <Step3
+          currentStep={currentStep}
+          nextStep={nextStep}
+          handleHaveChildren={handleHaveChildren}
+          haveChildren={haveChildren}
+        />
+        <Step4
+          currentStep={currentStep}
+          nextStep={nextStep}
+          childrenNumber={childrenNumber}
+          handleChildrenNumber={handleChildrenNumber}
+        />
+        <Step5 currentStep={currentStep} />
+        <br />
+        <br />
+      </Card>
+      <pre className={classes.codeSnippet}>
+        Current step:{" "}
+        <span className={classes.codeSnippetValue}>{currentStep}</span>
+        <br />
+        Name: <span className={classes.codeSnippetValue}>{name}</span>
+        <br />
+        Have children?:{" "}
+        <span className={classes.codeSnippetValue}>{haveChildren}</span>
+        <br />
+        Number of children?:{" "}
+        <span className={classes.codeSnippetValue}>{childrenNumber}</span>
+      </pre>
+    </Fragment>
+  );
 }
 
 function App() {
