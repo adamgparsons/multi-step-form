@@ -33,7 +33,6 @@ function Step1({ currentStep, nextStep }) {
           Start
         </Button>
       </div>
-      div
     );
   } else {
     return null;
