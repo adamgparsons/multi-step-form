@@ -30,6 +30,7 @@ function Step2({ currentStep, nextStep, name, handleName }) {
           value={name}
           onChange={handleName}
           margin="normal"
+          variant="outlined"
         />
         {/* <input
           id="name"

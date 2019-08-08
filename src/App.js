@@ -74,6 +74,12 @@ function MasterForm() {
     setChildrenNumber(e.target.value);
   }
 
+  function clearForm() {
+    setName("");
+    setHaveChildren("");
+    setChildrenNumber("");
+  }
+
   return (
     <Fragment>
       <Card className={classes.card}>
@@ -107,7 +113,11 @@ function MasterForm() {
           childrenNumber={childrenNumber}
           handleChildrenNumber={handleChildrenNumber}
         />
-        <Step5 currentStep={currentStep} />
+        <Step5
+          currentStep={currentStep}
+          nextStep={nextStep}
+          clearForm={clearForm}
+        />
         <br />
         <br />
       </Card>
@@ -117,10 +127,10 @@ function MasterForm() {
         <br />
         Name: <span className={classes.codeSnippetValue}>{name}</span>
         <br />
-        Have children?:{" "}
+        Have children:{" "}
         <span className={classes.codeSnippetValue}>{haveChildren}</span>
         <br />
-        Number of children?:{" "}
+        Number of children:{" "}
         <span className={classes.codeSnippetValue}>{childrenNumber}</span>
       </pre>
     </Fragment>

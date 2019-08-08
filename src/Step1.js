@@ -27,11 +27,13 @@ function Step1({ currentStep, nextStep }) {
           variant="contained"
           color="primary"
           className={classes.button}
+          classes={classes.button}
           onClick={() => nextStep(2)}
         >
           Start
         </Button>
       </div>
+      div
     );
   } else {
     return null;
