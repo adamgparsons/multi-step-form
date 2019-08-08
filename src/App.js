@@ -48,19 +48,28 @@ const useStyles = makeStyles(theme => ({
 function MasterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [name, setName] = useState("");
+  const [nameHasError, setNameHasError] = useState(true);
   const [haveChildren, setHaveChildren] = useState("");
   const [childrenNumber, setChildrenNumber] = useState("");
+  const [formHasError, setFormHasError] = useState(false);
+  console.log("NameHasError:", nameHasError);
   const classes = useStyles();
 
   // this function determines the next step in the form.
   // It pulls this from the logic placed on button inside the StepX component
   function nextStep(e) {
+    // if any field has an error then form has error is marked as true
+    // if (formHasError !== true) {
     setCurrentStep(e);
+    // }
   }
 
   // accepts the name from a text field and assigns it to the name state
   function handleName(e) {
     setName(e.target.value);
+    if (e.target.value.length > 0) {
+      setNameHasError(false);
+    }
   }
 
   // accepts the value from radio button
@@ -100,6 +109,8 @@ function MasterForm() {
           nextStep={nextStep}
           name={name}
           handleName={handleName}
+          nameHasError={nameHasError}
+          setFormHasError={setFormHasError}
         />
         <Step3
           currentStep={currentStep}

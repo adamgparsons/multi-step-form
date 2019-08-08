@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -16,14 +16,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Step2({ currentStep, nextStep, name, handleName }) {
+function Step2({
+  currentStep,
+  nextStep,
+  name,
+  handleName,
+  nameHasError,
+  setFormHasError
+}) {
+  const [showError, setShowError] = useState("");
   const classes = useStyles();
+
+  console.log("showError:", showError);
 
   if (currentStep === 2) {
     return (
       <div className="form-group">
         <h1>What is your name?</h1>
         <TextField
+          error={showError && nameHasError ? true : false}
           id="standard-name"
           label="Name"
           className={classes.textField}
@@ -32,21 +43,19 @@ function Step2({ currentStep, nextStep, name, handleName }) {
           margin="normal"
           variant="outlined"
         />
-        {/* <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Enter name"
-          // value is taken from name
-          value={name}
-          // when there is a change handleName assigns the value to name
-          onChange={handleName} // Prop: Puts data into state
-        /> */}
         <Button
           variant="contained"
           color="primary"
           className={classes.button}
-          onClick={() => nextStep(3)}
+          onClick={() => {
+            if (nameHasError !== true) {
+              nextStep(3);
+            } else {
+              setShowError(true);
+            }
+
+            // checkError();
+          }}
         >
           Next
         </Button>
