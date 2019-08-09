@@ -17,14 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Step2({
-  currentStep,
-  nextStep,
-  name,
-  handleName,
-  nameHasError,
-  setFormHasError
-}) {
+function Step2({ currentStep, nextStep, name, handleName, nameHasError }) {
   const [showError, setShowError] = useState("");
   const classes = useStyles();
 
@@ -53,6 +46,7 @@ function Step2({
           onClick={() => {
             if (nameHasError !== true) {
               nextStep(3);
+              setShowError(false);
             } else {
               setShowError(true);
             }

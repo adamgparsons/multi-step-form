@@ -63,7 +63,6 @@ function MasterForm() {
   const [haveChildrenHasError, setHaveChildrenHasError] = useState(true);
   const [childrenNumber, setChildrenNumber] = useState("");
   const [childrenNumberHasError, setChildrenNumberHasError] = useState(true);
-  const [formHasError, setFormHasError] = useState(false);
   const classes = useStyles();
 
   // this function determines the next step in the form.
@@ -116,8 +115,11 @@ function MasterForm() {
 
   function clearForm() {
     setName("");
+    setNameHasError(true);
     setHaveChildren("");
+    setHaveChildrenHasError(true);
     setChildrenNumber("");
+    setChildrenNumberHasError(true);
   }
 
   return (
@@ -146,7 +148,6 @@ function MasterForm() {
           name={name}
           handleName={handleName}
           nameHasError={nameHasError}
-          setFormHasError={setFormHasError}
         />
         <Step3
           currentStep={currentStep}

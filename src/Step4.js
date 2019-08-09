@@ -55,6 +55,7 @@ function Step4({
           onClick={() => {
             if (childrenNumberHasError !== true) {
               nextStep(5);
+              setShowError(false);
             } else {
               setShowError(true);
             }

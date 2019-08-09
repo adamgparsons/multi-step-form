@@ -56,6 +56,7 @@ function Step3({
           onClick={() => {
             if (haveChildrenHasError !== true) {
               haveChildren === "yes" ? nextStep(4) : nextStep(5);
+              setShowError(false);
             } else {
               setShowError(true);
             }
