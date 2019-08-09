@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import ErrorMessage from "./ErrorMesage";
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -27,12 +28,13 @@ function Step2({
   const [showError, setShowError] = useState("");
   const classes = useStyles();
 
-  console.log("showError:", showError);
-
   if (currentStep === 2) {
     return (
       <div className="form-group">
         <h1>What is your name?</h1>
+        {showError && nameHasError ? (
+          <ErrorMessage message="Please enter a name" />
+        ) : null}
         <TextField
           error={showError && nameHasError ? true : false}
           id="standard-name"
@@ -42,6 +44,7 @@ function Step2({
           onChange={handleName}
           margin="normal"
           variant="outlined"
+          autoComplete="off"
         />
         <Button
           variant="contained"

@@ -50,9 +50,10 @@ function MasterForm() {
   const [name, setName] = useState("");
   const [nameHasError, setNameHasError] = useState(true);
   const [haveChildren, setHaveChildren] = useState("");
+  const [haveChildrenHasError, setHaveChildrenHasError] = useState(true);
   const [childrenNumber, setChildrenNumber] = useState("");
+  const [childrenNumberHasError, setChildrenNumberHasError] = useState(true);
   const [formHasError, setFormHasError] = useState(false);
-  console.log("NameHasError:", nameHasError);
   const classes = useStyles();
 
   // this function determines the next step in the form.
@@ -69,6 +70,8 @@ function MasterForm() {
     setName(e.target.value);
     if (e.target.value.length > 0) {
       setNameHasError(false);
+    } else {
+      setNameHasError(true);
     }
   }
 
@@ -76,11 +79,21 @@ function MasterForm() {
   // this hook is then used in the conditional logic on the button
   function handleHaveChildren(e) {
     setHaveChildren(e.target.value);
+    if (e.target.value.length > 0) {
+      setHaveChildrenHasError(false);
+    } else {
+      setHaveChildrenHasError(true);
+    }
   }
 
   // accepts a value from the input & assigns it to the children state
   function handleChildrenNumber(e) {
     setChildrenNumber(e.target.value);
+    if (e.target.value.length > 0) {
+      setChildrenNumberHasError(false);
+    } else {
+      setChildrenNumberHasError(true);
+    }
   }
 
   function clearForm() {
@@ -117,12 +130,14 @@ function MasterForm() {
           nextStep={nextStep}
           handleHaveChildren={handleHaveChildren}
           haveChildren={haveChildren}
+          haveChildrenHasError={haveChildrenHasError}
         />
         <Step4
           currentStep={currentStep}
           nextStep={nextStep}
           childrenNumber={childrenNumber}
           handleChildrenNumber={handleChildrenNumber}
+          childrenNumberHasError={childrenNumberHasError}
         />
         <Step5
           currentStep={currentStep}

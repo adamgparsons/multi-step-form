@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
@@ -7,6 +6,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import { Fragment } from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
+import ErrorMessage from "./ErrorMesage";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -18,13 +18,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Step3({ currentStep, nextStep, handleHaveChildren, haveChildren }) {
+function Step3({
+  currentStep,
+  nextStep,
+  handleHaveChildren,
+  haveChildren,
+  haveChildrenHasError
+}) {
+  const [showError, setShowError] = useState("");
   const classes = useStyles();
   if (currentStep === 3) {
     return (
       <Fragment>
         <div className="form-group">
           <h1>Do you have children?</h1>
+          {showError && haveChildrenHasError ? (
+            <ErrorMessage message="Please select an option" />
+          ) : null}
           <FormControl component="fieldset" className={classes.formControl}>
             <RadioGroup
               aria-label="children"
@@ -38,31 +48,18 @@ function Step3({ currentStep, nextStep, handleHaveChildren, haveChildren }) {
             </RadioGroup>
           </FormControl>
         </div>
-        {/* <form>
-          <label>
-            <input
-              type="radio"
-              name="name"
-              value="yes"
-              onChange={handleHaveChildren}
-            />
-            Yes
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="name"
-              value="no"
-              onChange={handleHaveChildren}
-            />
-            No
-          </label>
-        </form> */}
+
         <Button
           variant="contained"
           color="primary"
           className={classes.button}
-          onClick={() => (haveChildren === "yes" ? nextStep(4) : nextStep(5))}
+          onClick={() => {
+            if (haveChildrenHasError !== true) {
+              haveChildren === "yes" ? nextStep(4) : nextStep(5);
+            } else {
+              setShowError(true);
+            }
+          }}
         >
           Next
         </Button>
