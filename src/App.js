@@ -45,6 +45,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const backButtonStyle = {
+  background: "none",
+  color: "blue",
+  border: "none",
+  padding: "0",
+  font: "inherit",
+  borderBottom: "1px solid blue",
+  cursor: "pointer"
+};
+
 function MasterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [name, setName] = useState("");
@@ -62,6 +72,14 @@ function MasterForm() {
     // if any field has an error then form has error is marked as true
     // if (formHasError !== true) {
     setCurrentStep(e);
+    // }
+  }
+
+  function prevStep(e) {
+    // if any field has an error then form has error is marked as true
+    // if (formHasError !== true) {
+    setCurrentStep(currentStep - 1);
+    // e.preventDefault();
     // }
   }
 
@@ -116,6 +134,11 @@ function MasterForm() {
             title: classes.cardHeader
           }}
         />
+        {currentStep === 1 || currentStep === 5 ? null : (
+          <button onClick={() => prevStep()} style={backButtonStyle}>
+            back
+          </button>
+        )}
         <Step1 currentStep={currentStep} nextStep={nextStep} />
         <Step2
           currentStep={currentStep}
